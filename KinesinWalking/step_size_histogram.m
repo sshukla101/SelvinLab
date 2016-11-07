@@ -31,6 +31,9 @@
     DataPath=uigetdir;
     cd(DataPath);
     FileIn=dir('*.txt');
+    
+    v=zeros(length(FileIn));
+    
     for i=1:length(FileIn)
         fid=fopen(FileIn(i).name);
         Input = textscan(fid,'%f%f','CommentStyle','##');
