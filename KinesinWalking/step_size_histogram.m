@@ -26,13 +26,15 @@
 
     
 %% Finding out instantaneous velocity
+    clear all;   
     exposureTime=0.00788;
     CodePath=pwd;
     DataPath=uigetdir;
     cd(DataPath);
     FileIn=dir('*.txt');
+    %% 
     
-    v=zeros(length(FileIn));
+    v=zeros(length(FileIn),1);
     
     for i=1:length(FileIn)
         fid=fopen(FileIn(i).name);
@@ -43,24 +45,33 @@
         plot(x,position);
         
         %Input start and end position for instaneous velocity
-        prompt = 'Start position';
-        start_l = input(prompt);
-        prompt = 'End position';
-        end_l = input(prompt);
+        start_end = input('Start position and end position in matrix form i.e. [800 950]>> ');
+
         
-        v(i)=abs((position(start_l) - position(end_l))/ ((start_l-end_l)*exposureTime));
+        v(i,1)=abs((position(start_end(1)) - position(start_end(2)))/ ((start_end(1)-start_end(2))*exposureTime));
     end
     
     v_avg=mean(v);
     v_max=max(v);
     v_min=min(v);
     
-     
-        
-        
-        
-        
-        
-        
-            
+    dlmwrite('inst_velocity.txt',v,'delimiter','\t','precision',3)
     
+   
+    
+    prompt = 'What is the sorbitol concentration?';
+    sorbitol = input(prompt,'s');
+    
+    figure(2)
+    bar(v)
+    hold on 
+    plot([0 length(v)],[v_avg v_avg],'r')
+    
+    
+    title(['Instantaneous velocity of kinesin:',sorbitol, ' M sorbitol'])
+    xlabel('samples')
+    ylabel('velocity (nm/sec)')
+    
+    
+    
+   
