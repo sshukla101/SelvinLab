@@ -77,7 +77,9 @@
     
     
     
-    %% Estimating moving average and velocity histogram of the tracce. Select the Transformed folder
+   
+%% Estimating moving average and velocity histogram of the tracce. Select the Transformed folder
+    clear all;
     CodePath=pwd;
     DataPath=uigetdir;
     cd(DataPath);
@@ -85,10 +87,13 @@
     %% Moving average plots; input the exposure time.
     
     %Moving average
-    exp_time=0.005;
+    exp_time=0.00788;
     mov_avg_window=10;
+    velocities=[];
+    velocity_range=0.1;  %Calculate velocity every 100 ms
+    frames=ceil(velocity_range/exp_time);
  
-    for i=1:length(FileIn):
+    for i=1:length(FileIn)
         f=dlmread(FileIn(i).name);
         x=f(:,1);
         t=(1:1:length(x))*exp_time;
@@ -100,17 +105,31 @@
         xlabel('time (s)');
         ylabel('x (nm)');
         saveas(gcf,['moving_avg_',num2str(i),'.png']);  %Saving the trajectory along with mving average.
+        clf;
         
         %Velocity histogram
+        iterations=floor(length(x)/frames);
         
-        
-        
-        
-        
-        
-        
+        start=1;
+        stop=frames;
+        for j=1:iterations
+            inst_vel=  abs((moving_avg(start)-moving_avg(end))/(frames*exp_time));
+            velocities=[velocities;inst_vel];
+            start=start+frames;
+            stop=stop+frames;
+        end    
         
     end
+    
+    prompt = 'What is the sorbitol concentration?';
+    sorbitol = input(prompt,'s');
+    
+    
+    figure(1)
+    histogram(velocities(velocities<4000),50);
+    title(['velocity histogram:',sorbitol,'M sorbitol']);
+    xlabel(' velocity (nm/sec)');
+    ylabel('frequency');
     
     
    
