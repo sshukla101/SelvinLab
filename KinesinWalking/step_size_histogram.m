@@ -1,4 +1,5 @@
-    %%Search txt file in the folder
+    %%Search txt file in the folder ; Select the T-Test folder
+   
     CodePath=pwd;
     DataPath=uigetdir;
     cd(DataPath);
@@ -72,6 +73,44 @@
     xlabel('samples')
     ylabel('velocity (nm/sec)')
     
+    
+    
+    
+    
+    %% Estimating moving average and velocity histogram of the tracce. Select the Transformed folder
+    CodePath=pwd;
+    DataPath=uigetdir;
+    cd(DataPath);
+    FileIn=dir('*.txt');
+    %% Moving average plots; input the exposure time.
+    
+    %Moving average
+    exp_time=0.005;
+    mov_avg_window=10;
+ 
+    for i=1:length(FileIn):
+        f=dlmread(FileIn(i).name);
+        x=f(:,1);
+        t=(1:1:length(x))*exp_time;
+        moving_avg=tsmovavg(x,'s',mov_avg_window,1); % Calculating the moving average.
+        
+        plot(t,x,'r');
+        hold on;
+        plot(t,moving_avg,'b','LineWidth',2);
+        xlabel('time (s)');
+        ylabel('x (nm)');
+        saveas(gcf,['moving_avg_',num2str(i),'.png']);  %Saving the trajectory along with mving average.
+        
+        %Velocity histogram
+        
+        
+        
+        
+        
+        
+        
+        
+    end
     
     
    
