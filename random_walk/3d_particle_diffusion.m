@@ -1,4 +1,4 @@
-$%MATLAB code for 3d diffusion of particles.
+%MATLAB code for 3d diffusion of particles.
 %File creates a output file where columns represent [x y z timestep particle_number]
 %It can generate the animation of the trajectories of particles
 %Author: Saurabh Shukla, Dec 5, 2016. 
