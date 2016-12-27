@@ -1,39 +1,16 @@
-    %%Search txt file in the folder ; Select the T-Test folder
-   
-    CodePath=pwd;
-    DataPath=uigetdir;
-    cd(DataPath);
-    FileIn=dir('*.mat');    
-    %% Extracting the step_size
-    CompiledDataPos = [];
-    CompiledDataNeg = [];
-    for i=1:length(FileIn)
-        Step = load(FileIn(i).name); Step = Step.Step;
-        dataPos = Step.StepSizeStats(Step.StepSizeStats>0)';
-        CompiledDataPos = [CompiledDataPos;dataPos];
-        dataNeg = Step.StepSizeStats(Step.StepSizeStats<0)';
-        CompiledDataNeg = [CompiledDataNeg;dataNeg];
-    end
-    %% Making the histograms of the data
-    prompt = 'What is the sorbitol concentration?';
-    sorbitol = input(prompt,'s');
-    
-    figure(1);
-    histogram([CompiledDataPos; CompiledDataNeg],100);
-    xlim([-40 40]);
-    title(['Step size histogram:',sorbitol, ' M sorbitol'])
-    xlabel('step size (nm)')
-    ylabel('frequency')
-
-    
-%% Finding out instantaneous velocity
+% Written by Saurabh Shukla, Selvin lab, UIUC. 
+% Last modified Dec 27, 2016.
+ 
+ 
+ %% Finding out instantaneous velocity. Select thr transformed folder. Change the exposure time accordingly.
     clear all;   
-    exposureTime=0.001;
+    exposureTime=0.001; % Input the exposure time.
     CodePath=pwd;
     DataPath=uigetdir;
     cd(DataPath);
     FileIn=dir('*.txt');
-    %% 
+    
+    %% Code will ask for the time coordinates for calculating the velocity. Time co-ordinates need to be decided beforehand by looking at the trace.
     
     
     k=1;
