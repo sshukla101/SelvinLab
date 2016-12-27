@@ -10,7 +10,8 @@
     cd(DataPath);
     FileIn=dir('*.txt');
     
-    %% Code will ask for the time coordinates for calculating the velocity. Time co-ordinates need to be decided beforehand by looking at the trace.
+    %% Code will ask for the time coordinates for calculating the velocity. Time co-ordinates need to be 
+    % decided beforehand by looking at the trace.
     
     
     k=1;
